@@ -1,0 +1,264 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-02-07T11:00:10+02:00\n"
+"PO-Revision-Date: 2022-02-07T11:00:10+02:00\n"
+"Language: \n"
+
+
+# GMT 1714549410.1001
+msgctxt "aerosalloyalty"
+msgid "Aerosalloyalty"
+msgstr "Aerosalloyalty"
+
+# GMT 1714549410.1001
+msgctxt "aerosalloyalty"
+msgid "Settings"
+msgstr "Settings"
+
+# GMT 1714549410.1002
+msgctxt "aerosalloyalty"
+msgid "Campaign Types"
+msgstr "Campaign Types"
+
+# GMT 1714549410.1003
+msgctxt "aerosalloyalty"
+msgid "Campaigns Monitoring"
+msgstr "Campaigns Monitoring"
+
+# GMT 1714549410.1004
+msgctxt "aerosalloyalty"
+msgid "Default EAN Encoding"
+msgstr "Default EAN Encoding"
+
+# GMT 1714549410.1005
+msgctxt "aerosalloyalty"
+msgid "Pre-selected in the manual entry modal."
+msgstr "Pre-selected in the manual entry modal."
+
+# GMT 1714549410.1006
+msgctxt "aerosalloyalty"
+msgid "Enable \"points & benefits\""
+msgstr "Enable \"points & benefits\""
+
+# GMT 1714549410.1007
+msgctxt "aerosalloyalty"
+msgid "If disabled, the button will be hidden on app end."
+msgstr "If disabled, the button will be hidden on app end."
+
+# GMT 1714549410.1008
+msgctxt "aerosalloyalty"
+msgid "Webhook URL"
+msgstr "Webhook URL"
+
+# GMT 1714549410.1009
+msgctxt "aerosalloyalty"
+msgid "Called on create/scan/enter with card & customer data."
+msgstr "Called on create/scan/enter with card & customer data."
+
+# GMT 1714549410.1010
+msgctxt "aerosalloyalty"
+msgid "Save Settings"
+msgstr "Save Settings"
+
+# GMT 1714549410.1011
+msgctxt "aerosalloyalty"
+msgid "Manage Campaign Types"
+msgstr "Manage Campaign Types"
+
+# GMT 1714549410.1012
+msgctxt "aerosalloyalty"
+msgid "Add Campaign Type"
+msgstr "Add Campaign Type"
+
+# GMT 1714549410.1013
+msgctxt "aerosalloyalty"
+msgid "Code"
+msgstr "Code"
+
+# GMT 1714549410.1014
+msgctxt "aerosalloyalty"
+msgid "Name"
+msgstr "Name"
+
+# GMT 1714549410.1015
+msgctxt "aerosalloyalty"
+msgid "Icon"
+msgstr "Icon"
+
+# GMT 1714549410.1016
+msgctxt "aerosalloyalty"
+msgid "Action"
+msgstr "Action"
+
+# GMT 1714549410.1017
+msgctxt "aerosalloyalty"
+msgid "Type Code"
+msgstr "Type Code"
+
+# GMT 1714549410.1018
+msgctxt "aerosalloyalty"
+msgid "Unique per feature (e.g., points, promo)"
+msgstr "Unique per feature (e.g., points, promo)"
+
+# GMT 1714549410.1019
+msgctxt "aerosalloyalty"
+msgid "Type Name"
+msgstr "Type Name"
+
+# GMT 1714549410.1020
+msgctxt "aerosalloyalty"
+msgid "Icon (optional)"
+msgstr "Icon (optional)"
+
+# GMT 1714549410.1021
+msgctxt "aerosalloyalty"
+msgid "Save Type"
+msgstr "Save Type"
+
+# GMT 1714549410.1022
+msgctxt "aerosalloyalty"
+msgid "Cancel"
+msgstr "Cancel"
+
+# GMT 1714549410.1023
+msgctxt "aerosalloyalty"
+msgid "Manage Campaigns"
+msgstr "Manage Campaigns"
+
+# GMT 1714549410.1024
+msgctxt "aerosalloyalty"
+msgid "Filter by Card Number"
+msgstr "Filter by Card Number"
+
+# GMT 1714549410.1025
+msgctxt "aerosalloyalty"
+msgid "Load"
+msgstr "Load"
+
+# GMT 1714549410.1026
+msgctxt "aerosalloyalty"
+msgid "Card Number"
+msgstr "Card Number"
+
+# GMT 1714549410.1027
+msgctxt "aerosalloyalty"
+msgid "Campaign UID"
+msgstr "Campaign UID"
+
+# GMT 1714549410.1028
+msgctxt "aerosalloyalty"
+msgid "Type Code"
+msgstr "Type Code"
+
+# GMT 1714549410.1029
+msgctxt "aerosalloyalty"
+msgid "Name"
+msgstr "Name"
+
+# GMT 1714549410.1030
+msgctxt "aerosalloyalty"
+msgid "Points"
+msgstr "Points"
+
+# GMT 1714549410.1031
+msgctxt "aerosalloyalty"
+msgid "Prizes"
+msgstr "Prizes"
+
+# GMT 1714549410.1032
+msgctxt "aerosalloyalty"
+msgid "Action"
+msgstr "Action"
+
+msgctxt "aerosalloyalty"
+msgid "Loading your Loyalty Card…"
+msgstr "Loading your Loyalty Card…"
+
+msgctxt "aerosalloyalty"
+msgid "Loyalty Card Management"
+msgstr "Loyalty Card Management"
+
+msgctxt "aerosalloyalty"
+msgid "To activate your card, choose one of the 3 options below"
+msgstr "To activate your card, choose one of the 3 options below"
+
+msgctxt "aerosalloyalty"
+msgid "Scan an existing card"
+msgstr "Scan an existing card"
+
+msgctxt "aerosalloyalty"
+msgid "Enter the number of an existing card"
+msgstr "Enter the number of an existing card"
+
+msgctxt "aerosalloyalty"
+msgid "Create a new virtual card"
+msgstr "Create a new virtual card"
+
+msgctxt "aerosalloyalty"
+msgid "Enter Your Card Number"
+msgstr "Enter Your Card Number"
+
+msgctxt "aerosalloyalty"
+msgid "Enter 13 digits, e.g. "
+msgstr "Enter 13 digits, e.g."
+
+msgctxt "aerosalloyalty"
+msgid "Enter your card number"
+msgstr "Enter your card number"
+
+msgctxt "aerosalloyalty"
+msgid "EAN encoding"
+msgstr "EAN encoding"
+
+msgctxt "aerosalloyalty"
+msgid "EAN13"
+msgstr "EAN13"
+
+msgctxt "aerosalloyalty"
+msgid "CODE128"
+msgstr "CODE128"
+
+msgctxt "aerosalloyalty"
+msgid "Tip: When EAN13 is selected, the card number must be exactly 13 digits."
+msgstr "Tip: When EAN13 is selected, the card number must be exactly 13 digits."
+
+msgctxt "aerosalloyalty"
+msgid "Cancel"
+msgstr "Cancel"
+
+msgctxt "aerosalloyalty"
+msgid "Create"
+msgstr "Create"
+
+msgctxt "aerosalloyalty"
+msgid "Manage Loyalty Card"
+msgstr "Manage Loyalty Card"
+
+msgctxt "aerosalloyalty"
+msgid "Here is your personal loyalty card"
+msgstr "Here is your personal loyalty card"
+
+msgctxt "aerosalloyalty"
+msgid "Stored Card"
+msgstr "Stored Card"
+
+msgctxt "aerosalloyalty"
+msgid "DATE STORED:"
+msgstr "DATE STORED:"
+
+msgctxt "aerosalloyalty"
+msgid "Check your points and benefits"
+msgstr "Check your points and benefits"
+
+msgctxt "aerosalloyalty"
+msgid "Delete your card"
+msgstr "Delete your card"
+
+ 

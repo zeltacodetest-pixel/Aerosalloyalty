@@ -1,0 +1,25 @@
+<ion-view view-title="{{ :: 'My Virtual Card' | translate:'aerosalloyalty' }}">
+  <ion-content class="padding" style="background-color: #f5f6fa">
+    <div class="card" style="text-align: center; padding: 20px">
+      <h2>Hello, {{customer_name}}</h2>
+      <p>Your Virtual Card Number:</p>
+      <h3 style="color: #28a745">{{cardNumber}}</h3>
+    </div>
+
+    <div class="list">
+      <button
+        class="button button-assertive button-block"
+        ng-click="deleteCard()"
+      >
+        Delete your card
+      </button>
+
+      <button
+        class="button button-balanced button-block"
+        ng-click="checkPoints()"
+      >
+        Check your points and benefits
+      </button>
+    </div>
+  </ion-content>
+</ion-view>

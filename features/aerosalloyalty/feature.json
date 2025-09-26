@@ -1,0 +1,32 @@
+{
+  "name": "aerosalloyalty",
+  "code": "aerosalloyalty",
+  "version": "0.0.2",
+  "category": "monetization",
+  "model": "Aerosalloyalty_Model_Settings",
+  "desktop_uri": "aerosalloyalty/application/",
+  "routes": [
+    {
+      "root": true,
+      "state": "aerosalloyalty-main",
+      "controller": "MainViewController",
+      "url": "aerosalloyalty/mobile_view/index/value_id/:value_id",
+      "template": "l1/main.html",
+      "cache": false
+    }
+  ],
+  "icons": [
+    "icons/aerosalloyalty1.png",
+    "icons/aerosalloyalty2.png",
+    "icons/aerosalloyalty3.png"
+  ],
+  "files": [
+    "js/controllers/aerosalloyalty.js",
+    "js/factory/aerosalloyalty.js"
+  ],
+  "is_ajax": true,
+  "compile": true,
+  "use_account": true,
+  "only_once": true,
+  "load_on_start": false
+}

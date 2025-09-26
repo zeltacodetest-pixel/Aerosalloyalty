@@ -1,0 +1,25 @@
+<ion-view view-title="{{page_title}}">
+  <ion-content class="padding" style="text-align: center;">
+
+    <h3 style="font-weight: bold; margin: 20px 0;">SCAN YOUR CARD</h3>
+
+    <!-- Dummy Barcode (EAN-13) -->
+    <div style="margin:20px 0;">
+      <img
+        ng-src="https://api-bwipjs.metafloor.com/?bcid=ean13&text={{dummyBarcode}}&scale=3&includetext"
+        alt="Dummy Barcode"
+        style="width: 200px; height: 100px; margin:auto;"
+      />
+      <p style="margin-top: 10px; font-size: 16px;">
+        {{dummyBarcode}}
+      </p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
+      <button class="button button-balanced" ng-click="createNewCard()">Create</button>
+      <button class="button button-assertive" style="margin-left: 10px;" ng-click="cancelScan()">Cancel</button>
+    </div>
+
+  </ion-content>
+</ion-view>

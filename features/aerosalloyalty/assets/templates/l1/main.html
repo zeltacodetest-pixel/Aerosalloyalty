@@ -1,0 +1,221 @@
+<ion-view view-title="{{ :: 'Aerosalloyalty' | translate:'aerosalloyalty' }}">
+  <ion-content class="padding" style="background-color: #f5f6fa">
+    <!-- ===================== LOADING ===================== -->
+    <div
+      ng-if="state==='loading'"
+      class="card"
+      style="
+        text-align: center;
+        padding: 40px 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <ion-spinner
+        icon="crescent"
+        class="spinner-positive"
+        style="margin-bottom: 12px"
+      ></ion-spinner>
+      <p style="color: #7f8c8d; font-size: 16px">
+        {{ :: 'Loading your Loyalty Card…' | translate:'aerosalloyalty' }}
+      </p>
+    </div>
+
+    <!-- ===================== SETUP VIEW ===================== -->
+    <div ng-if="state==='setup' && !card">
+      <div
+        class="card"
+        style="
+          text-align: center;
+          padding: 30px 20px;
+          border-radius: 12px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <i
+          class="icon ion-card"
+          style="font-size: 60px; color: #27ae60; margin-bottom: 15px"
+        ></i>
+        <h3 style="color: #2c3e50; font-weight: 600; margin-bottom: 8px">
+          {{ :: 'Loyalty Card Management' | translate:'aerosalloyalty' }}
+        </h3>
+        <p style="color: #7f8c8d; font-size: 18px">
+          {{ :: 'To activate your card, choose one of the 3 options below' |
+          translate:'aerosalloyalty' }}
+        </p>
+      </div>
+
+      <button class="button button-block" ng-click="openScan()">
+        {{ :: 'Scan an existing card' | translate:'aerosalloyalty' }}
+      </button>
+
+      <button class="button button-block" ng-click="openManual()">
+        {{ :: 'Enter the number of an existing card' |
+        translate:'aerosalloyalty' }}
+      </button>
+
+      <button class="button button-block" ng-click="createVirtual()">
+        {{ :: 'Create a new virtual card' | translate:'aerosalloyalty' }}
+      </button>
+    </div>
+
+    <div ng-if="state==='manual'" class="card card-rounded padding">
+      <h3 style="color: #2c3e50; font-weight: 600; margin-bottom: 10px">
+        {{ :: 'Enter Your Card Number' | translate:'aerosalloyalty' }}
+      </h3>
+
+      <label class="item item-input">
+        <input
+          type="text"
+          ng-model="manual.card_number"
+          ng-attr-placeholder="{{ (manual.ean_encoding || 'EAN13') === 'EAN13' ? ('Enter 13 digits, e.g. 1234567890123' | translate:'aerosalloyalty') : ('Enter your card number' | translate:'aerosalloyalty') }}"
+        />
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label" style="font-weight: bold">
+          {{ :: 'EAN encoding' | translate:'aerosalloyalty' }}
+        </div>
+        <select ng-model="manual.ean_encoding">
+          <option value="EAN13">
+            {{ :: 'EAN13' | translate:'aerosalloyalty' }}
+          </option>
+          <option value="CODE128">
+            {{ :: 'CODE128' | translate:'aerosalloyalty' }}
+          </option>
+        </select>
+      </label>
+      <!-- <p style="color:#777; font-size:12px; margin-top:6px;">
+          {{ :: 'Tip: When EAN13 is selected, the card number must be exactly 13 digits.' | translate:'aerosalloyalty' }}
+        </p> -->
+
+      <div class="row" style="margin-top: 15px">
+        <div class="col">
+          <button
+            class="button button-stable button-block"
+            ng-click="backToSetup()"
+          >
+            {{ :: 'Cancel' | translate:'aerosalloyalty' }}
+          </button>
+        </div>
+
+        <div class="col">
+          <button
+            class="button button-positive button-block"
+            ng-click=" saveManual(value_id,customer_id)"
+          >
+            {{ :: 'Create' | translate:'aerosalloyalty' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== CARD VIEW ===================== -->
+    <div
+      ng-if="state==='card'"
+      class="card card-rounded padding"
+      style="text-align: center"
+    >
+      <!-- Header -->
+      <h3 style="color: #2c3e50; font-weight: 600; margin-bottom: 10px">
+        {{ :: 'Manage Loyalty Card' | translate:'aerosalloyalty' }}
+      </h3>
+
+      <p style="font-size: 16px; margin-bottom: 20px">
+        {{ :: 'Here is your personal loyalty card' | translate:'aerosalloyalty'
+        }}
+      </p>
+
+      <!-- Card Box -->
+      <div
+        style="
+          border: 1px solid #ccc;
+          padding: 15px;
+          border-radius: 8px;
+          background: #fafafa;
+          display: inline-block;
+        "
+      >
+        <h4 style="margin: 0; font-weight: bold">
+          {{ :: 'Stored Card' | translate:'aerosalloyalty' }}
+        </h4>
+        <p style="font-size: 12px; margin: 5px 0; color: #777">
+          {{ 'DATE STORED:' | translate:'aerosalloyalty' }} {{ created_at }}
+        </p>
+
+        <!-- Barcode Image -->
+        <img
+          ng-src="{{barcode_url}}"
+          alt="Barcode"
+          style="max-width: 100%; margin: 10px 0"
+        />
+
+        <!-- Card Number -->
+        <p style="margin: 5px 0; font-size: 16px; font-weight: bold">
+          {{card_number}}
+        </p>
+      </div>
+
+      <!-- Buttons -->
+      <div style="margin-top: 20px">
+        <button
+          class="button button-positive button-block"
+          ng-click="openCampaigns()"
+          style="background-color: #6ba8ff; font-weight: bold"
+        >
+          {{ :: 'Check your points and benefits' | translate:'aerosalloyalty' }}
+        </button>
+
+        <button
+          class="button button-assertive button-block"
+          ng-click="deleteCard()"
+          style="background-color: #ff7b7b; margin-top: 10px; font-weight: bold"
+        >
+          {{ :: 'Delete your card' | translate:'aerosalloyalty' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- ===================== CAMPAIGNS ===================== -->
+    <div ng-if="state==='campaigns'">
+      <h3 style="color: #2c3e50; font-weight: 600; margin-bottom: 15px">
+        {{ :: 'Le tue raccolte e promozioni attive' | translate:'aerosalloyalty'
+        }}
+      </h3>
+
+      <div class="list">
+        <div
+          class="card"
+          ng-repeat="c in campaigns"
+          style="
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 12px;
+          "
+        >
+          <div class="item item-text-wrap">
+            <b>{{ :: 'Tipo Campagna:' | translate:'aerosalloyalty' }}</b> {{
+            c.campaign_type_name || c.campaign_type_code }}
+          </div>
+          <div class="item item-text-wrap" ng-if="c.points_balance != null">
+            <b>{{ :: 'Saldo Punti:' | translate:'aerosalloyalty' }}</b> {{
+            c.points_balance }}
+          </div>
+          <div class="item item-text-wrap">
+            <b>{{ :: 'Nome Campagna:' | translate:'aerosalloyalty' }}</b> {{
+            c.name }}
+          </div>
+          <div class="item item-text-wrap" ng-if="c.prizes">
+            <b>{{ :: 'Premi da ritirare:' | translate:'aerosalloyalty' }}</b> {{
+            c.prizes }}
+          </div>
+        </div>
+      </div>
+
+      <button class="button button-stable button-block" ng-click="state='card'">
+        {{ :: 'Indietro' | translate:'aerosalloyalty' }}
+      </button>
+    </div>
+  </ion-content>
+</ion-view>

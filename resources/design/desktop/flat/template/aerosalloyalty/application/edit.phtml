@@ -1,0 +1,673 @@
+<?php
+$application = $this->getApplication();
+$app_id      = $application->getId();
+
+$option   = $this->getOptionValue(); // complete option/feature object
+$value_id = $option->getId();
+
+// base-url
+$default  = new Core_Model_Default();
+$base_url = $default->getBaseUrl();
+if (substr($base_url, -1) !== '/') $base_url .= '/';
+?>
+
+<div id="aerosalloyalty" class="module-aerosalloyalty">
+
+  <div class="navbar-btn btn-sm"></div>
+
+  <ul class="nav nav-tabs custome_nav" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#tab-settings" aria-controls="tab-settings" role="tab"
+        data-toggle="tab"><?php echo p__("Aerosalloyalty", "Settings"); ?></a>
+    </li>
+    <li role="presentation">
+      <a href="#tab-types" aria-controls="tab-types" role="tab"
+        data-toggle="tab"><?php echo p__("Aerosalloyalty", "Campaign Types"); ?>
+      </a>
+    </li>
+    <li role="presentation">
+      <a href="#tab-campaigns" aria-controls="tab-campaigns" role="tab"
+        data-toggle="tab"><?php echo p__("Aerosalloyalty", "Campaigns Monitoring"); ?>
+      </a>
+    </li>
+    <li role="presentation">
+      <a href="#tab-webhook" aria-controls="tab-webhook" role="tab"
+        data-toggle="tab"><?php echo p__("Aerosalloyalty", "Webhook Docs"); ?>
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab-settings">
+      <h3 class="title-editor no-border-radius title-feature-indent">
+        <?php echo p__("Aerosalloyalty", 'Settings'); ?>
+      </h3>
+
+      <div class="container-fluid content-feature pt30">
+        <div class="card shadow-sm rounded-2xl p-5 bg-white">
+          <form id="aero-settings-form" class="form-horizontal pt" role="form" onsubmit="return false;">
+            <!-- Hidden Inputs -->
+            <input type="hidden" name="value_id" value="<?php echo (int) $value_id; ?>">
+            <input type="hidden" name="app_id" value="<?php echo (int) $app_id; ?>">
+
+            <!-- Default EAN Encoding -->
+            <div class="form-group row mb-4 mt-4">
+              <label for="default_ean_encoding" class="col-sm-3 col-form-label fw-bold">
+                <?php echo p__("Aerosalloyalty", "Default EAN Encoding"); ?>
+              </label>
+              <div class="col-sm-7">
+                <select class="form-control color-blue" id="default_ean_encoding" name="default_ean_encoding">
+                  <option value="EAN13">EAN13</option>
+                  <option value="CODE128">CODE128</option>
+                </select>
+                <small class="form-text text-muted">
+                  <?php echo p__("Aerosalloyalty", "Pre-selected in the manual entry modal."); ?>
+                </small>
+              </div>
+            </div>
+
+
+            <!-- Enable Points & Benefits -->
+            <div class="form-group row mb-4">
+              <label class="col-sm-3 col-form-label fw-bold">
+                <?php echo p__("Aerosalloyalty", "Enable \"points & benefits\""); ?>:
+              </label>
+              <div class="col-sm-7 d-flex align-items-center">
+                <input type="checkbox" class="form-check-input me-2" id="enable_check_benefits" name="enable_check_benefits" value="1">
+                <small class="form-text text-muted">
+                  <?php echo p__("Aerosalloyalty", "If disabled, the button will be hidden on app end."); ?>
+                </small>
+              </div>
+            </div>
+
+            <!-- Webhook URL -->
+            <div class="form-group row mb-4">
+              <label for="webhook_url" class="col-sm-3 col-form-label fw-bold">
+                <?php echo p__("Aerosalloyalty", "Webhook URL"); ?>:
+              </label>
+              <div class="col-sm-7">
+                <input type="url" class="form-control input-flat" id="webhook_url" name="webhook_url" placeholder="https://example.com/loyalty-webhook">
+                <small class="form-text text-muted">
+                  <?php echo p__("Aerosalloyalty", "Called on create/scan/enter with card & customer data."); ?>
+                </small>
+              </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="form-group">
+              <div class="col-sm-9 offset-sm-3  text-right">
+                <button type="button" class="btn color-blue" id="btn_save_settings">
+                  <i class="icon-save"></i> <?php echo p__("Aerosalloyalty", "Save Settings"); ?>
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tab-pane" id="tab-types">
+      <h3 class="title-editor no-border-radius title-feature-indent d-flex align-items-center">
+        <?php echo p__("Aerosalloyalty", 'Manage Campaign Types'); ?>
+        <button type="button" id="add-type-btn" class="btn btn-info ml-auto" style="position: absolute; right: 1px; top: 1px;">
+          <i class="fa fa-plus"></i> <?php echo p__("Aerosalloyalty", "Add Campaign Type"); ?>
+        </button>
+      </h3>
+
+
+      <div class="campaign-type-container container-fluid content-feature pt30">
+
+        <!-- Type List -->
+        <div id="typeTableContainer" style="margin-top:20px;">
+          <table id="types_table"
+            class="table display responsive nowrap content-white-bkg"
+            style="width:100%">
+            <thead>
+              <tr class="border-grey">
+                <th><?php echo p__("Aerosalloyalty", "Code"); ?></th>
+                <th><?php echo p__("Aerosalloyalty", "Name"); ?></th>
+                <th><?php echo p__("Aerosalloyalty", "Icon"); ?></th>
+                <th><?php echo p__("Aerosalloyalty", "Action"); ?></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <form id="aero-type-form" class="form-horizontal" role="form" onsubmit="return false;" style="display:none;">
+
+          <!-- Hidden Inputs -->
+          <input type="hidden" name="app_id" value="<?= (int)$app_id ?>">
+          <input type="hidden" name="value_id" value="<?= (int)$value_id ?>">
+          <input type="hidden" name="operation" value="create">
+          <input type="hidden" id="aero_type_id" name="aero_type_id" value="">
+
+          <!-- Type Code -->
+          <div class="form-group sb-form-line">
+            <label for="type_code" class="sb-form-line-title col-sm-3">
+              <?php echo p__("Aerosalloyalty", "Type Code"); ?>
+            </label>
+            <div class="col-sm-7">
+              <input id="type_code" type="text" name="code"
+                class="form-control input-flat"
+                placeholder="points / promo">
+              <p class="help-block">
+                <?php echo p__("Aerosalloyalty", "Unique per feature (e.g., points, promo)"); ?>
+              </p>
+            </div>
+          </div>
+
+          <!-- Type Name -->
+          <div class="form-group sb-form-line">
+            <label for="type_name" class="sb-form-line-title col-sm-3">
+              <?php echo p__("Aerosalloyalty", "Type Name"); ?>
+            </label>
+            <div class="col-sm-7">
+              <input id="type_name" type="text" name="name"
+                class="form-control input-flat"
+                placeholder="Raccolta Punti / Promo">
+            </div>
+          </div>
+
+          <!-- Icon -->
+          <div class="form-group sb-form-line">
+            <label for="type_icon" class="sb-form-line-title col-sm-3">
+              <?php echo p__("Aerosalloyalty", "Icon (optional)"); ?>
+            </label>
+            <div class="col-sm-7">
+              <input id="type_icon" type="text" name="icon"
+                class="form-control input-flat"
+                placeholder="/path/to/icon.png">
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-7 text-right">
+              <button class="btn color-blue" id="btn_save_type" type="submit">
+                <?php echo p__("Aerosalloyalty", "Save Type"); ?>
+              </button>
+              <button type="button" id="cancel-type-btn" class="btn color-white">
+                <?php echo p__("Aerosalloyalty", "Cancel"); ?>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="tab-campaigns">
+      <h3 class="title-editor no-border-radius title-feature-indent">
+        <?php echo p__("Aerosalloyalty", 'Manage Campaigns'); ?>
+      </h3>
+
+      <div class="campaigns-container container-fluid content-feature pt30">
+
+        <!-- Filter Form -->
+        <form id="campaign-filter-form" class="form-horizontal mb20" onsubmit="return false;">
+          <div class="form-group sb-form-line">
+            <label for="filter_card_number" class="sb-form-line-title col-sm-3">
+              <?php echo p__("Aerosalloyalty", "Filter by Card Number"); ?>
+            </label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control input-flat"
+                id="filter_card_number"
+                placeholder="e.g., 151d2005150">
+            </div>
+            <div class="col-sm-3">
+              <button type="button" class="btn color-blue" id="btn_reload_campaigns">
+                <i class="icon-refresh"></i> <?php echo p__("Aerosalloyalty", "Load"); ?>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Campaigns List -->
+        <div id="campaignTableContainer">
+          <table id="campaigns_table"
+            class="table display responsive nowrap content-white-bkg"
+            style="width:100%">
+            <thead>
+              <tr class="border-grey">
+                <th><?php echo p__("Aerosalloyalty", "Card Number"); ?></th>
+                <th><?php echo p__("Aerosalloyalty", "Campaign UID"); ?></th>
+                <th><?php echo p__("Aerosalloyalty", "Type Code"); ?></th>
+                <th><?php echo p__("Aerosalloyalty", "Name"); ?></th>
+                <th><?php echo p__("Aerosalloyalty", "Points"); ?></th>
+                <th><?php echo p__("Aerosalloyalty", "Prizes"); ?></th>
+                <th><?php echo p__("Aerosalloyalty", "Action"); ?></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="tab-pane" id="tab-webhook">
+      <h3 class="title-editor no-border-radius title-feature-indent">
+        <?php echo p__('Aerosalloyalty', 'Webhook Documentation'); ?>
+      </h3>
+      <div class="container-fluid content-feature pt30">
+        <div class="card shadow-sm rounded-2xl p-5 bg-white">
+          <p class="alert alert-info" ><?php echo p__('Aerosalloyalty', 'When a card is linked (via manual entry, scan, or virtual creation), the module sends a POST request to the configured Webhook URL.'); ?></p>
+          <p class="alert alert-success"><b><?php echo p__('Aerosalloyalty', 'Method'); ?>:</b> POST</p>
+          <p class="alert alert-info"><b><?php echo p__('Aerosalloyalty', 'Content-Type'); ?>:</b> application/json</p>
+          <p class="alert alert-danger"><b><?php echo p__('Aerosalloyalty', 'Event'); ?>:</b> <code>card_linked</code></p>
+          <p><b><?php echo p__('Aerosalloyalty', 'Payload'); ?>:</b></p>
+          <pre style="white-space: pre-wrap; word-break: break-word; background:#f7f7f9; padding:12px; border-radius:6px;">
+                    `{
+                      "value_id": 123,
+                      "card_number": "4006381333931",
+                      "customer": {
+                        "id": 456,
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "email": "john@example.com"
+                      },
+                      "event": "card_linked"
+                    }`
+          </pre>
+          <p class="alert alert-warning"><b><?php echo p__('Aerosalloyalty', 'Notes'); ?>:</b></p>
+          <ul>
+            <li><?php echo p__('Aerosalloyalty', 'Webhook delivery is best-effort and non-blocking. Failures are logged in aerosalloyalty_webhook_logs.'); ?></li>
+            <li><?php echo p__('Aerosalloyalty', 'Ensure your endpoint responds within 6 seconds.'); ?></li>
+            <li><?php echo p__('Aerosalloyalty', 'You can validate requests by restricting the URL and/or network firewall.'); ?></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<style>
+  .form-group {
+    margin-bottom: 15px;
+    margin-top: 20px;
+  }
+
+  .col-sm-9 {
+    width: 78%;
+  }
+
+  .mb-3 {
+    margin-bottom: 15px;
+  }
+</style>
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+
+  $(document).ready(function() {
+    // Add Type button → Show form, hide table
+    $("#add-type-btn").on("click", function() {
+      $("#aero-type-form").show();
+      $("#typeTableContainer").hide();
+      $('#add-type-btn').hide();
+    });
+
+    // Cancel button → Hide form, show table
+    $("#cancel-type-btn").on("click", function() {
+      $('#add-type-btn').show();
+      $("#aero-type-form").hide();
+      $("#typeTableContainer").show();
+    });
+
+    // Save button → form submit par trigger hoga
+    $("#aero-type-form").on("submit", function(e) {
+      e.preventDefault(); // form ko default submit hone se rokne ke liye
+
+      // Yahan apni AJAX call ya form submit logic lagao
+      alert("Type Saved!");
+
+      // After save → hide form, show table
+      $("#aero-type-form").hide();
+      $("#typeTableContainer").show();
+    });
+  });
+
+
+  (function($) {
+    var base = '<?php echo $base_url; ?>';
+    var value_id = <?php echo (int)$value_id; ?>;
+    var app_id = <?php echo (int)$app_id; ?>;
+    // DataTable instance for Campaign Types
+    var dt_object = null;
+
+    function ensureTypesDataTable() {
+      if (!$.fn.DataTable) return; // DataTables not loaded; skip
+      if (dt_object) return; // already initialized
+      dt_object = $('#types_table').DataTable({
+        paging: true,
+        searching: true,
+        lengthChange: false,
+        pageLength: 10,
+        autoWidth: false,
+        responsive: true,
+        // Keep existing header order: Code, Name, Icon, Action
+        columns: [
+          { data: 'code' },
+          { data: 'name' },
+          { data: 'icon' },
+          {
+            data: null,
+            orderable: false,
+            searchable: false,
+            className: 'text-right',
+            render: function(data, type, row) {
+              var id = row.id || '';
+              return '<button type="button" data-id="' + id + '" class="btn btn-danger btn-xs btn-del-type">'
+                + '<i class="icon-trash"></i> <?php echo p__("Aerosalloyalty", "Delete"); ?>'
+                + '</button>';
+            }
+          }
+        ],
+        order: [[0, 'asc']]
+      });
+      // Add some Bootstrap-ish table styles if missing
+      $('#types_table').addClass('table-striped table-hover');
+    }
+
+    function msg(res) {
+      alert(res && (res.message || (res.success ? 'OK' : 'Error')));
+    }
+
+    // ---------- INIT ----------
+    function init() {
+      $.ajax({
+          type: 'GET',
+          url: base + 'aerosalloyalty/application/init',
+          data: {
+            value_id: value_id
+          },
+          dataType: 'json'
+        })
+        .done(function(res) {
+          if (res && res.error) {
+            msg(res);
+            return;
+          }
+          var s = (res && res.settings) || {};
+          $('#default_ean_encoding').val(s.default_ean_encoding || 'EAN13');
+          $('#enable_check_benefits').prop('checked', !!(+(s.enable_check_benefits || 0)));
+          $('#webhook_url').val(s.webhook_url || '');
+          renderTypes((res && res.types) || []);
+        })
+        .fail(function(err) {
+          console.log(err);
+        });
+    }
+
+    // ---------- SETTINGS SAVE ----------
+  $('#btn_save_settings').on('click', function() {
+    var data = {
+        value_id: value_id,
+        app_id: app_id,
+        default_ean_encoding: $('#default_ean_encoding').val() || 'EAN13',
+        enable_check_benefits: $('#enable_check_benefits').is(':checked') ? 1 : 0,
+        webhook_url: $('#webhook_url').val() || ''
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: base + 'aerosalloyalty/application/save-settings',
+        data: data,
+        dataType: 'json'
+    })
+    .done(function(res) {
+        if (res && res.success) {
+            Swal.fire({
+                icon: 'success',
+                title: '<?php echo p__("Aerosalloyalty", "Settings Saved"); ?>',
+                text: res.message || '<?php echo p__("Aerosalloyalty", "Your settings have been saved successfully."); ?>',
+                confirmButtonColor: '#3085d6'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: '<?php echo p__("Aerosalloyalty", "Error"); ?>',
+                text: res.message || '<?php echo p__("Aerosalloyalty", "Unable to save settings."); ?>',
+                confirmButtonColor: '#d33'
+            });
+        }
+    })
+    .fail(function(err) {
+        console.log(err);
+        Swal.fire({
+            icon: 'error',
+            title: '<?php echo p__("Aerosalloyalty", "Request Failed"); ?>',
+            text: '<?php echo p__("Aerosalloyalty", "Something went wrong while saving settings."); ?>',
+            confirmButtonColor: '#d33'
+        });
+    });
+});
+
+    // ---------- TYPES: RENDER ----------
+    function renderTypes(list) {
+      // Prefer DataTables if available
+      if ($.fn.DataTable) {
+        ensureTypesDataTable();
+        var rows = (list || []).map(function(t) {
+          return {
+            id: t.aerosalloyalty_campaign_type_id || '',
+            code: t.code || '',
+            name: t.name || '',
+            icon: t.icon || ''
+          };
+        });
+        dt_object.clear();
+        if (rows.length) dt_object.rows.add(rows);
+        dt_object.draw();
+        return;
+      }
+
+      // Fallback: render plain table rows
+      var $tb = $('#types_table tbody').empty();
+      (list || []).forEach(function(t) {
+        var id = t.aerosalloyalty_campaign_type_id || '';
+        var $tr = $('<tr/>');
+        $('<td/>').text(t.code || '').appendTo($tr);
+        $('<td/>').text(t.name || '').appendTo($tr);
+        $('<td/>').text(t.icon || '').appendTo($tr);
+        var $actions = $('<td class="text-right"/>');
+        var $del = $('<button type="button" class="btn btn-danger btn-xs"><i class="icon-trash"></i> <?php echo p__("Aerosalloyalty", "Delete"); ?></button>');
+        $del.on('click', function() {
+          if (!confirm('<?php echo p__("Aerosalloyalty", "Delete this type?"); ?>')) return;
+          $.ajax({
+              type: 'POST',
+              url: base + 'aerosalloyalty/application/delete-type',
+              data: { id: id },
+              dataType: 'json'
+            })
+            .done(function(res) {
+              msg(res);
+              if (res && res.success) reloadTypes();
+            })
+            .fail(function(err) { console.log(err); });
+        });
+        $actions.append($del).appendTo($tr);
+        $tb.append($tr);
+      });
+    }
+
+    // Delegated delete handler for DataTable rows
+ $('#types_table').on('click', '.btn-del-type', function() {
+    if (!dt_object) return; // handle only when DataTable is active
+    var id = $(this).data('id');
+    if (!id) return;
+
+    Swal.fire({
+        title: '<?php echo p__("Aerosalloyalty", "Are you sure?"); ?>',
+        text: '<?php echo p__("Aerosalloyalty", "Do you really want to delete this type?"); ?>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: '<?php echo p__("Aerosalloyalty", "Yes, delete it!"); ?>',
+        cancelButtonText: '<?php echo p__("Aerosalloyalty", "Cancel"); ?>'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: base + 'aerosalloyalty/application/delete-type',
+                data: { id: id },
+                dataType: 'json'
+            })
+            .done(function(res) {
+                msg(res);
+                if (res && res.success) reloadTypes();
+
+                Swal.fire(
+                    '<?php echo p__("Aerosalloyalty", "Deleted!"); ?>',
+                    '<?php echo p__("Aerosalloyalty", "The type has been deleted."); ?>',
+                    'success'
+                );
+            })
+            .fail(function(err) { 
+                console.log(err);
+                Swal.fire(
+                    '<?php echo p__("Aerosalloyalty", "Error!"); ?>',
+                    '<?php echo p__("Aerosalloyalty", "Something went wrong."); ?>',
+                    'error'
+                );
+            });
+        }
+    });
+});
+
+    // ---------- TYPES: RELOAD ----------
+    function reloadTypes() {
+      $.ajax({
+          type: 'GET',
+          url: base + 'aerosalloyalty/application/list-types',
+          data: {
+            value_id: value_id
+          },
+          dataType: 'json'
+        })
+        .done(function(res) {
+          if (res && res.error) {
+            msg(res);
+            return;
+          }
+          renderTypes((res && res.types) || []);
+        })
+        .fail(function(err) {
+          console.log(err);
+        });
+    }
+
+    // ---------- TYPES: SAVE ----------
+    $('#btn_save_type').on('click', function() {
+      var data = {
+        value_id: value_id,
+        code: $('#type_code').val().trim(),
+        name: $('#type_name').val().trim(),
+        icon: $('#type_icon').val().trim()
+      };
+      if (!data.code || !data.name) {
+        alert('<?php echo p__("Aerosalloyalty", "Code and Name are required"); ?>');
+        return;
+      }
+      $.ajax({
+          type: 'POST',
+          url: base + 'aerosalloyalty/application/save-type',
+          data: data,
+          dataType: 'json'
+        })
+        .done(function(res) {
+          msg(res);
+          if (res && res.success) {
+            $('#type_code, #type_name, #type_icon').val('');
+            reloadTypes();
+          }
+        })
+        .fail(function(err) {
+          console.log(err);
+        });
+    });
+
+    // ---------- CAMPAIGNS: LOAD ----------
+    $('#btn_reload_campaigns').on('click', function() {
+      var card = $('#filter_card_number').val().trim();
+      var data = {
+        value_id: value_id
+      };
+      if (card) data.card_number = card;
+
+      $.ajax({
+          type: 'GET',
+          url: base + 'aerosalloyalty/application/list-campaigns',
+          data: data,
+          dataType: 'json'
+        })
+        .done(function(res) {
+          if (res && res.error) {
+            msg(res);
+            return;
+          }
+          renderCampaigns((res && res.campaigns) || []);
+        })
+        .fail(function(err) {
+          console.log(err);
+        });
+    });
+
+    // ---------- CAMPAIGNS: RENDER ----------
+    function renderCampaigns(list) {
+      var $tb = $('#campaigns_table tbody').empty();
+      (list || []).forEach(function(c) {
+        var $tr = $('<tr/>');
+        $('<td/>').text(c.card_number || '').appendTo($tr);
+        $('<td/>').text(c.campaign_uid || '').appendTo($tr);
+        $('<td/>').text(c.campaign_type_code || '').appendTo($tr);
+        $('<td/>').text(c.name || '').appendTo($tr);
+        $('<td/>').text(parseInt(c.points_balance || 0, 10)).appendTo($tr);
+        $('<td/>').text(c.prizes || '').appendTo($tr);
+
+        var $actions = $('<td/>');
+        var $del = $('<button type="button" class="btn btn-danger btn-xs"><i class="icon-trash"></i> <?php echo p__("", "Delete"); ?></button>');
+        $del.on('click', function() {
+          if (!confirm('<?php echo p__("Aerosalloyalty", "Delete this campaign?"); ?>')) return;
+          $.ajax({
+              type: 'POST',
+              url: base + 'aerosalloyalty/application/delete-campaign',
+              data: {
+                value_id: value_id,
+                card_number: c.card_number,
+                campaign_uid: c.campaign_uid
+              },
+              dataType: 'json'
+            })
+            .done(function(res) {
+              msg(res);
+              if (res && res.success) {
+                $('#btn_reload_campaigns').click();
+              }
+            })
+            .fail(function(err) {
+              console.log(err);
+            });
+        });
+        $actions.append($del).appendTo($tr);
+
+        $tb.append($tr);
+      });
+    }
+
+    // ---------- BOOT ----------
+    init();
+
+    if ($.fn.tab) {
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function() {
+        /* keep default */
+      });
+    }
+  })(jQuery);
+</script>

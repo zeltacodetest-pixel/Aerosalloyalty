@@ -1,0 +1,76 @@
+<div class="nav-bar-block">
+  <ion-header-bar
+    class="bar-custom bar bar-header disable-user-behavior aerosalloyalty-view"
+    align-title="center"
+  >
+    <button
+      class="button back-button buttons button-clear header-item"
+      ng-click="toNavigate()"
+    >
+      <i class="icon ion-ios-arrow-back"></i>
+    </button>
+    <div class="title title-center header-item" id="aerosalloyalty-title">
+      <span class="nav-bar-title">{{ page_title }}</span>
+    </div>
+    <button
+      class="button ion-log-out"
+      style="background: transparent; border: none; font-size: 1.6em"
+      ng-if="is_logged_in"
+      ng-click="loginModalMP()"
+    ></button>
+    <button
+      class="button ion-log-in"
+      style="background: transparent; border: none; font-size: 1.6em"
+      ng-if="!is_logged_in"
+      ng-click="loginModalMP()"
+    ></button>
+  </ion-header-bar>
+</div>
+
+<ion-view class="aerosalloyalty-view" sb-page-background cache-view="false">
+  <ion-content class="aerosalloyalty">
+
+  </ion-content>
+</ion-view>
+
+<!-- Custom Styles -->
+<style>
+  ion-nav-bar.bar-custom.nav-bar-container {
+    display: none;
+  }
+  #signature-pad {
+    border: 1px solid #000;
+    /* margin-top: 20px; */
+    width: 100% !important;
+  }
+  #pdf-preview-container {
+    /* max-width: 800px; */
+    /* height: 800px; */
+    /* border: 1px solid #000; */
+    /* margin-top: 20px; */
+    position: relative;
+    /* overflow: auto; */
+  }
+  #pdf-preview-container canvas {
+    max-width: 800px; /* Fixed width for consistent scaling */
+    width: 100% !important; /* Scales within the container */
+    height: auto;
+    border: 1px solid #ddd;
+  }
+  .signature-preview {
+    position: absolute;
+    cursor: move;
+  }
+  #signature-container {
+    /* position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #fff;
+    padding: 10px; */
+    /* border: 1px solid #000; */
+    /* z-index: 1000; */
+  }
+  #controls {
+    margin-top: 20px;
+  }
+</style>

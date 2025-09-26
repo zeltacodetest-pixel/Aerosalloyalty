@@ -1,0 +1,12 @@
+{
+  "name": "Aerosalloyalty",
+  "description": "Aerosalloyalty",
+  "type": "module",
+  "version": "0.1.51",
+  "dependencies": {
+    "system": {
+      "type": "SAE",
+      "version": "5.0.0"
+    }
+  }
+}

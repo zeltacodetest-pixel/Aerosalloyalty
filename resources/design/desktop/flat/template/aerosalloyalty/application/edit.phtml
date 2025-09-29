@@ -418,7 +418,7 @@ if (substr($base_url, -1) !== '/') $base_url .= '/';
         type: 'POST',
         url: base + 'aerosalloyalty/application/save-settings',
         data: data,
-        // dataType: 'json'
+        dataType: 'json'
     })
     .done(function(res) {
         if (res && res.success) {

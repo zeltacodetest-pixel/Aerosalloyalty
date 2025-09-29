@@ -32,6 +32,37 @@ class Aerosalloyalty_Model_Campaign extends Core_Model_Default
         return $this;
     }
 
+    public static function generateUid($value_id, $card_number, $length = 16) {
+        $length = max(8, (int)$length);
+        do {
+            $bytes = bin2hex(random_bytes((int)ceil($length / 2)));
+            $uid   = strtoupper(substr($bytes, 0, $length));
+            $existing = (new self())->findByUid($value_id, $uid, $card_number);
+        } while ($existing && $existing->getId());
+
+        return $uid;
+    }
+
+    public function findByUid($value_id, $uid, $card_number = null) {
+        $where = [
+            'value_id = ?'    => (int)$value_id,
+            'campaign_uid = ?'=> (string)$uid
+        ];
+
+        if ($card_number !== null) {
+            $where['card_number = ?'] = (string)$card_number;
+        }
+
+        $row = $this->_db_table->fetchRow($where);
+        if ($row) {
+            $this->setData($row->toArray());
+        } else {
+            $this->setData([]);
+        }
+
+        return $this;
+    }
+
     public function deleteByUid($value_id, $card_number, $uid) {
         return $this->_db_table->delete([
             'value_id = ?'     => (int)$value_id,

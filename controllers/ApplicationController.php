@@ -54,6 +54,48 @@ class Aerosalloyalty_ApplicationController extends Application_Controller_Defaul
         }
     }
 
+    /** API TOKEN — fetch active token (GET) */
+    public function getApiTokenAction()
+    {
+        try {
+            $value_id = (int)$this->getRequest()->getParam('value_id');
+            if (!$value_id) throw new Exception('Missing value_id');
+
+            $token = (new Aerosalloyalty_Model_ApiToken())->ensureToken($value_id);
+
+            return $this->_sendJson([
+                'success' => 1,
+                'token' => $token->getToken(),
+                'last_used_at' => $token->getLastUsedAt()
+            ]);
+        } catch (Exception $e) {
+            return $this->_sendJson(['error' => 1, 'message' => $e->getMessage()]);
+        }
+    }
+
+    /** API TOKEN — regenerate (POST) */
+    public function regenerateApiTokenAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->_sendJson(['error' => 1, 'message' => 'Invalid request']);
+        }
+
+        try {
+            $value_id = (int)$this->getRequest()->getPost('value_id');
+            if (!$value_id) throw new Exception('Missing value_id');
+
+            $token = (new Aerosalloyalty_Model_ApiToken())->regenerateToken($value_id);
+
+            return $this->_sendJson([
+                'success' => 1,
+                'token' => $token->getToken(),
+                'last_used_at' => $token->getLastUsedAt()
+            ]);
+        } catch (Exception $e) {
+            return $this->_sendJson(['error' => 1, 'message' => $e->getMessage()]);
+        }
+    }
+
     /** CAMPAIGN TYPES — list (GET) */
     public function listTypesAction()
     {

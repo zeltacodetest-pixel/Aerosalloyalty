@@ -14,6 +14,17 @@ class Aerosalloyalty_Model_Settings extends Core_Model_Default
         return $this;
     }
 
+    public function findByAppId(int $app_id) {
+        $row = $this->_db_table->fetchRow(['app_id = ?' => $app_id]);
+        if ($row) {
+            $this->setData($row->toArray());
+            return $this;
+        }
+
+        $this->setData([]);
+        return null;
+    }
+
     public function upsert(array $data) {
         $value_id = (int)$data['value_id'];
         $row = $this->_db_table->fetchRow(['value_id = ?' => $value_id]);

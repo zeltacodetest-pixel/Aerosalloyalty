@@ -177,88 +177,114 @@ msgctxt "aerosalloyalty"
 msgid "Action"
 msgstr "Action"
 
+# GMT 1714549410.1033
 msgctxt "aerosalloyalty"
 msgid "Loading your Loyalty Card…"
 msgstr "Loading your Loyalty Card…"
 
+# GMT 1714549410.1034
 msgctxt "aerosalloyalty"
 msgid "Loyalty Card Management"
 msgstr "Loyalty Card Management"
 
+# GMT 1714549410.1035
 msgctxt "aerosalloyalty"
 msgid "To activate your card, choose one of the 3 options below"
 msgstr "To activate your card, choose one of the 3 options below"
 
+# GMT 1714549410.1036
 msgctxt "aerosalloyalty"
 msgid "Scan an existing card"
 msgstr "Scan an existing card"
 
+# GMT 1714549410.1037
 msgctxt "aerosalloyalty"
 msgid "Enter the number of an existing card"
 msgstr "Enter the number of an existing card"
 
+# GMT 1714549410.1038
 msgctxt "aerosalloyalty"
 msgid "Create a new virtual card"
 msgstr "Create a new virtual card"
 
+# GMT 1714549410.1039
 msgctxt "aerosalloyalty"
 msgid "Enter Your Card Number"
 msgstr "Enter Your Card Number"
 
+# GMT 1714549410.1040
 msgctxt "aerosalloyalty"
 msgid "Enter 13 digits, e.g. "
 msgstr "Enter 13 digits, e.g."
 
+# GMT 1714549410.1041
 msgctxt "aerosalloyalty"
 msgid "Enter your card number"
 msgstr "Enter your card number"
 
+# GMT 1714549410.1042
 msgctxt "aerosalloyalty"
 msgid "EAN encoding"
 msgstr "EAN encoding"
 
+# GMT 1714549410.1043
 msgctxt "aerosalloyalty"
 msgid "EAN13"
 msgstr "EAN13"
 
+# GMT 1714549410.1044
 msgctxt "aerosalloyalty"
 msgid "CODE128"
 msgstr "CODE128"
 
+# GMT 1714549410.1045
 msgctxt "aerosalloyalty"
 msgid "Tip: When EAN13 is selected, the card number must be exactly 13 digits."
 msgstr "Tip: When EAN13 is selected, the card number must be exactly 13 digits."
 
+# GMT 1714549410.1046
 msgctxt "aerosalloyalty"
 msgid "Cancel"
 msgstr "Cancel"
 
+# GMT 1714549410.1047
 msgctxt "aerosalloyalty"
 msgid "Create"
 msgstr "Create"
 
+# GMT 1714549410.1048
 msgctxt "aerosalloyalty"
 msgid "Manage Loyalty Card"
 msgstr "Manage Loyalty Card"
 
+# GMT 1714549410.1049
 msgctxt "aerosalloyalty"
 msgid "Here is your personal loyalty card"
 msgstr "Here is your personal loyalty card"
 
+# GMT 1714549410.1050
 msgctxt "aerosalloyalty"
 msgid "Stored Card"
 msgstr "Stored Card"
 
+# GMT 1714549410.1051
 msgctxt "aerosalloyalty"
 msgid "DATE STORED:"
 msgstr "DATE STORED:"
 
+# GMT 1714549410.1052
 msgctxt "aerosalloyalty"
 msgid "Check your points and benefits"
 msgstr "Check your points and benefits"
 
+# GMT 1714549410.1053
 msgctxt "aerosalloyalty"
 msgid "Delete your card"
 msgstr "Delete your card"
+
+# GMT 1714549410.1054
+msgctxt "aerosalloyalty"
+msgid "Points"
+msgstr "Points"
 
  

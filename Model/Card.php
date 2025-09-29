@@ -24,7 +24,8 @@ class Aerosalloyalty_Model_Card extends Core_Model_Default
     {
         $row = $this->_db_table->fetchRow([
             'value_id = ?'   => (int)$value_id,
-            'card_number = ?' => (string)$card_number
+            'card_number = ?' => (string)$card_number,
+            'deleted_at IS NULL'
         ]);
         if ($row) $this->setData($row->toArray());
         return $this;
